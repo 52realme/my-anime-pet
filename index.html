@@ -232,7 +232,56 @@ sphere(-0.2,-1.4,0.08,0.2,0.12,0.3,blue);
 sphere(0.2,-1.4,0.08,0.2,0.12,0.3,blue);
  // 头顶装饰
 sphere(0,2.08,0,0.13,0.13,0.13,blue);
+// ===== V2 人物细节升级 =====
 
+// 腮红
+const blush=material('#ffb4c8');
+sphere(-0.43,1.08,0.48,0.12,0.055,0.035,blush);
+sphere(0.43,1.08,0.48,0.12,0.055,0.035,blush);
+
+// 眉毛
+const eyebrow=material('#b8c7e5');
+sphere(-0.25,1.47,0.52,0.14,0.025,0.025,eyebrow);
+sphere(0.25,1.47,0.52,0.14,0.025,0.025,eyebrow);
+
+// 眼睛增加高光
+sphere(-0.22,1.22,0.59,0.035,0.06,0.025,white);
+sphere(0.28,1.22,0.59,0.035,0.06,0.025,white);
+
+// 嘴巴
+const mouthMat=material('#d77991');
+const mouthCurve=new THREE.QuadraticBezierCurve3(
+new THREE.Vector3(-0.07,0.98,0.57),
+new THREE.Vector3(0,0.92,0.61),
+new THREE.Vector3(0.07,0.98,0.57)
+);
+const mouth=new THREE.Mesh(
+new THREE.TubeGeometry(mouthCurve,16,0.012,8,false),
+mouthMat
+);
+pet.add(mouth);
+
+// 发丝装饰
+const strandMat=material('#dce5fa');
+
+sphere(-0.48,1.55,0.54,0.045,0.35,0.045,strandMat);
+sphere(0.48,1.55,0.54,0.045,0.35,0.045,strandMat);
+
+// 蝴蝶结
+const ribbon=material('#91a9e8');
+sphere(-0.35,0.45,0.34,0.18,0.09,0.07,ribbon);
+sphere(0.35,0.45,0.34,0.18,0.09,0.07,ribbon);
+sphere(0,0.45,0.42,0.09,0.09,0.06,white);
+
+// 衣服装饰
+const collar=material('#ffffff');
+sphere(0,0.36,0.3,0.2,0.08,0.08,collar);
+
+// 星星装饰
+const starMat=material('#f8d98a');
+sphere(0.72,1.95,0,0.09,0.09,0.09,starMat);
+
+console.log('My Anime Pet V2 loaded!');
 // 角色动画状态
 let sleeping=false;
 let happy=false;
