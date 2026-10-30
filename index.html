@@ -1,181 +1,181 @@
-<！doctype html>
-<超文本标记语言 朗="zh-CN">
-<头>
-<元 字符集="UTF-8">
-<元 姓名="视口" 内容="宽度=设备宽度，初始比例=1">
-<标题>我的动漫宠物</标题>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Anime Pet</title>
 
-<风格>
-*{箱体尺寸:边框框}
-身体{
- 边缘:0;
-高度：100VH；
-溢出:隐藏的;
-字体系列：Arial，无衬线；
-背景：线性梯度(145deg，#dceaff，#f7e9ff，#e8f5ff)；
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ height:100vh;
+ overflow:hidden;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(145deg,#dceaff,#f7e9ff,#e8f5ff);
 }
-.页眉{
- 文本对齐:中心;
-填充：25px；
-颜色：#52658c；
+.header{
+ text-align:center;
+ padding:25px;
+ color:#52658c;
 }
-.页眉h2{边缘：0}
+.header h2{margin:0}
 .pet{
-位置：绝对；
-左侧：50%；
-最高：45%；
-转换：平移(-50%，-50%)；
-宽度：210px；
-文本对齐：居中；
-光标：抓取；
-用户选择：无；
-触摸动作：无；
-动画：浮点3s无限进出；
+ position:absolute;
+ left:50%;
+ top:45%;
+ transform:translate(-50%,-50%);
+ width:210px;
+ text-align:center;
+ cursor:grab;
+ user-select:none;
+ touch-action:none;
+ animation:float 3s infinite ease-in-out;
 }
-.Character{
-font-size:145px；
-滤镜：drop-shadow(012px12px#8294bd66)；
+.character{
+ font-size:145px;
+ filter:drop-shadow(0 12px 12px #8294bd66);
 }
 .face{
-位置：相对；
-宽度：150px；
-高度：175px；
-边距：自动；
-背景：线性梯度(135度，#FFF，#dce5ff)；
-边界半径：48%~48%~45%~45%；
-box-shadow：插图-10px-8px15px#b9c9ed；
-}  
-.hair{
-位置：绝对；
-顶部：-22px；
-左：-8px；
-宽度：166px；
-高度：85px；
-背景：线性梯度(135度，#FFF，#c9d5ed)；
-边界半径：55%55%30%30%；
+ position:relative;
+ width:150px;
+ height:175px;
+ margin:auto;
+ background:linear-gradient(135deg,#fff,#dce5ff);
+ border-radius:48% 48% 45% 45%;
+ box-shadow:inset -10px -8px 15px #b9c9ed;
 }
-.Eye{
-位置：绝对；
-top:91px；
-宽度：17px；
-高度：23px；
-背景：#526aab；
-边界半径：50%；
+.hair{
+ position:absolute;
+ top:-22px;
+ left:-8px;
+ width:166px;
+ height:85px;
+ background:linear-gradient(135deg,#fff,#c9d5ed);
+ border-radius:55% 55% 30% 30%;
+}
+.eye{
+ position:absolute;
+ top:91px;
+ width:17px;
+ height:23px;
+ background:#526aab;
+ border-radius:50%;
 }
 .eye.left{left:35px}
 .eye.right{right:35px}
-.脸红{
-位置：绝对；
-顶部：123px；
-宽度：23px；
-高度：10px；
-背景：#ffb9ce；
-边界半径：50%；
-不透明度：.65；
-} 
+.blush{
+ position:absolute;
+ top:123px;
+ width:23px;
+ height:10px;
+ background:#ffb9ce;
+ border-radius:50%;
+ opacity:.65;
+}
 .blush.left{left:17px}
 .blush.right{right:17px}
-.口{
-位置：绝对；
-顶部：125px；
-左：69px；
-字体大小：18px；
-颜色：#a36d87；
+.mouth{
+ position:absolute;
+ top:125px;
+ left:69px;
+ font-size:18px;
+ color:#a36d87;
 }
 .info{
-位置：绝对；
-底部：95px；
-左侧：50%；
-变换：translateX(-50%)；
-宽度：85%；
-最大宽度：350px；
-填料：20px；
-背景：#ffffffaa；
-背景滤镜：模糊(15 PX)；
-边界半径：20px；
-文本对齐：居中；
-颜色：#59698d；
+ position:absolute;
+ bottom:95px;
+ left:50%;
+ transform:translateX(-50%);
+ width:85%;
+ max-width:350px;
+ padding:20px;
+ background:#ffffffaa;
+ backdrop-filter:blur(15px);
+ border-radius:20px;
+ text-align:center;
+ color:#59698d;
 }
-按钮{
-边框：0；
-填料：12px18px；
-余量：5px；
-边界半径：15px；
-背景：#dce6ff；
-颜色：#52658c；
-字体大小：15px；
+button{
+ border:0;
+ padding:12px 18px;
+ margin:5px;
+ border-radius:15px;
+ background:#dce6ff;
+ color:#52658c;
+ font-size:15px;
 }
 @keyframes float{
-0%，100%{margin-top:0}
-50%{margin-top：-15px}
+ 0%,100%{margin-top:0}
+ 50%{margin-top:-15px}
 }
-</风格
-</头>
+</style>
+</head>
 
-<身体>
+<body>
 
-<div 班级="页眉">
-<h2>♡ 我的动漫宠物 ♡</h2>
+<div class="header">
+<h2>♡ My Anime Pet ♡</h2>
 <p>我的专属二次元桌宠</p>
 </div>
 
-<div 班级="宠物" 身份标识="宠物">
- <div 班级="面部">
-  <div 班级="头发"></div>
-  <div 班级="左眼"></div>
-  <div 班级="右眼"></div>  
-   <div 班级="向左脸红"></div>
-  <div 班级="向右腮红"></div>
-  <div 班级="口">ω</div>
+<div class="pet" id="pet">
+ <div class="face">
+  <div class="hair"></div>
+  <div class="eye left"></div>
+  <div class="eye right"></div>
+  <div class="blush left"></div>
+  <div class="blush right"></div>
+  <div class="mouth">ω</div>
  </div>
 </div>
 
-<div 班级="信息">
- <div 身份标识="消息">你好呀！我是你的白发桌宠～</div>
- <溴>
- <按钮 onClick="说话()">互动</按钮>
- <按钮 onClick="睡()">睡觉</按钮>
- <按钮 onClick="醒来()">起床</按钮>
+<div class="info">
+ <div id="message">你好呀！我是你的白发桌宠～</div>
+ <br>
+ <button onclick="talk()">互动</button>
+ <button onclick="sleep()">睡觉</button>
+ <button onclick="wake()">起床</button>
 </div>
 
-<脚本>
-Const宠物=文件.getElementById("宠物")；
-Const消息=文件.getElementById("消息")；
+<script>
+const pet=document.getElementById("pet");
+const message=document.getElementById("message");
 
-功能 说话(){
- 消息.内部文本="主人，今天也要开心哦！♡";
+function talk(){
+ message.innerText="主人，今天也要开心哦！♡";
 }
-功能 睡(){
-消息.内部文本="Zzz...我先睡一会儿~"；
- 宠物.风格.动画="无";
+function sleep(){
+ message.innerText="Zzz... 我先睡一会儿～";
+ pet.style.animation="none";
 }
-功能 醒来(){
- 消息.内部文本="早上好！我醒啦！";
- 宠物.风格.动画="浮点3s无限易入易出";
+function wake(){
+ message.innerText="早上好！我醒啦！";
+ pet.style.animation="float 3s infinite ease-in-out";
 }
 
-让拖拽=假的，DX=0，Dy=0；
+let dragging=false,dx=0,dy=0;
 
-宠物.addEventListener("指针向下"，e=>{
-拖拽=正确;
-Const r=宠物.getBoundingClientRect
-DX=e.ClientX-r.左；
-Dy=e.客户-r.顶端；
-宠物.setPointerCapture(e.pointerId)；
- 宠物.风格.动画="无";
+pet.addEventListener("pointerdown",e=>{
+ dragging=true;
+ const r=pet.getBoundingClientRect();
+ dx=e.clientX-r.left;
+ dy=e.clientY-r.top;
+ pet.setPointerCapture(e.pointerId);
+ pet.style.animation="none";
 });
 
-宠物.addEventListener("pointintermove"，e=>{
-如果(!拖拽)返回;
-宠物.风格.左=(e.ClientX-DX)+"px"；
-宠物.风格.顶端=(e.客户-Dy)+"px"；
- 宠物.风格.改变="无";
+pet.addEventListener("pointermove",e=>{
+ if(!dragging)return;
+ pet.style.left=(e.clientX-dx)+"px";
+ pet.style.top=(e.clientY-dy)+"px";
+ pet.style.transform="none";
 });
 
-宠物.addEventListener("pointerup"，()=>{
-拖拽=假的;
+pet.addEventListener("pointerup",()=>{
+ dragging=false;
 });
-</脚本>
+</script>
 
-</身体>
-</超文本标记语言>
+</body>
+</html>
