@@ -2,180 +2,356 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>My Anime Pet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My 3D Anime Pet</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+ box-sizing:border-box;
+}
 body{
  margin:0;
- height:100vh;
  overflow:hidden;
  font-family:Arial,sans-serif;
- background:linear-gradient(145deg,#dceaff,#f7e9ff,#e8f5ff);
+ background:linear-gradient(145deg,#dceaff,#f5e7ff,#e5f4ff);
+}
+#scene{
+ width:100vw;
+ height:100vh;
+ display:block;
+ touch-action:none;
 }
 .header{
+ position:absolute;
+ top:15px;
+ width:100%;
  text-align:center;
- padding:25px;
- color:#52658c;
+ color:#596c9e;
+ pointer-events:none;
 }
-.header h2{margin:0}
-.pet{
+.header h2{
+ margin:0;
+ font-size:25px;
+}
+.header p{
+ margin:7px;
+ font-size:13px;
+}
+ .panel{
  position:absolute;
- left:50%;
- top:45%;
- transform:translate(-50%,-50%);
- width:210px;
- text-align:center;
- cursor:grab;
- user-select:none;
- touch-action:none;
- animation:float 3s infinite ease-in-out;
-}
-.character{
- font-size:145px;
- filter:drop-shadow(0 12px 12px #8294bd66);
-}
-.face{
- position:relative;
- width:150px;
- height:175px;
- margin:auto;
- background:linear-gradient(135deg,#fff,#dce5ff);
- border-radius:48% 48% 45% 45%;
- box-shadow:inset -10px -8px 15px #b9c9ed;
-}
-.hair{
- position:absolute;
- top:-22px;
- left:-8px;
- width:166px;
- height:85px;
- background:linear-gradient(135deg,#fff,#c9d5ed);
- border-radius:55% 55% 30% 30%;
-}
-.eye{
- position:absolute;
- top:91px;
- width:17px;
- height:23px;
- background:#526aab;
- border-radius:50%;
-}
-.eye.left{left:35px}
-.eye.right{right:35px}
-.blush{
- position:absolute;
- top:123px;
- width:23px;
- height:10px;
- background:#ffb9ce;
- border-radius:50%;
- opacity:.65;
-}
-.blush.left{left:17px}
-.blush.right{right:17px}
-.mouth{
- position:absolute;
- top:125px;
- left:69px;
- font-size:18px;
- color:#a36d87;
-}
-.info{
- position:absolute;
- bottom:95px;
+ bottom:20px;
  left:50%;
  transform:translateX(-50%);
- width:85%;
- max-width:350px;
- padding:20px;
- background:#ffffffaa;
- backdrop-filter:blur(15px);
- border-radius:20px;
+ width:90%;
+ max-width:380px;
+ padding:17px;
+ border-radius:23px;
+ background:#ffffffa8;
+ backdrop-filter:blur(18px);
+ box-shadow:0 8px 30px #8098c533;
  text-align:center;
- color:#59698d;
+ color:#586b96;
+}
+#message{
+ font-size:15px;
+ margin-bottom:12px;
 }
 button{
  border:0;
- padding:12px 18px;
- margin:5px;
- border-radius:15px;
+ border-radius:14px;
+ padding:11px 15px;
+ margin:4px;
  background:#dce6ff;
  color:#52658c;
- font-size:15px;
+ font-size:14px;
 }
-@keyframes float{
- 0%,100%{margin-top:0}
- 50%{margin-top:-15px}
+button:active{
+ transform:scale(.94);
+}
+.tip{
+ position:absolute;
+ top:100px;
+ width:100%;
+ text-align:center;
+ color:#8797b8;
+ font-size:12px;
+ pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 
+<canvas id="scene"></canvas>
+
 <div class="header">
-<h2>♡ My Anime Pet ♡</h2>
-<p>我的专属二次元桌宠</p>
+<h2>♡ My 3D Anime Pet ♡</h2>
+<p>我的专属 3D 桌宠</p>
 </div>
 
-<div class="pet" id="pet">
- <div class="face">
-  <div class="hair"></div>
-  <div class="eye left"></div>
-  <div class="eye right"></div>
-  <div class="blush left"></div>
-  <div class="blush right"></div>
-  <div class="mouth">ω</div>
- </div>
+<div class="tip">
+用手指拖动人物，可以旋转观察
 </div>
 
-<div class="info">
- <div id="message">你好呀！我是你的白发桌宠～</div>
- <br>
- <button onclick="talk()">互动</button>
- <button onclick="sleep()">睡觉</button>
- <button onclick="wake()">起床</button>
+<div class="panel">
+<div id="message">
+你好！我是你的白发 3D 桌宠～
 </div>
 
-<script>
-const pet=document.getElementById("pet");
-const message=document.getElementById("message");
+<button onclick="smile()">互动</button>
+<button onclick="sleepPet()">睡觉</button>
+<button onclick="wakePet()">起床</button>
+<button onclick="resetView()">复位</button>
+</div>
+<script type="module">
+import * as THREE from
+'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-function talk(){
- message.innerText="主人，今天也要开心哦！♡";
-}
-function sleep(){
- message.innerText="Zzz... 我先睡一会儿～";
- pet.style.animation="none";
-}
-function wake(){
- message.innerText="早上好！我醒啦！";
- pet.style.animation="float 3s infinite ease-in-out";
-}
+const canvas=document.getElementById('scene');
 
-let dragging=false,dx=0,dy=0;
+const scene=new THREE.Scene();
+scene.background=new THREE.Color('#e9edff');
 
-pet.addEventListener("pointerdown",e=>{
- dragging=true;
- const r=pet.getBoundingClientRect();
- dx=e.clientX-r.left;
- dy=e.clientY-r.top;
- pet.setPointerCapture(e.pointerId);
- pet.style.animation="none";
+const camera=new THREE.PerspectiveCamera(
+45,
+window.innerWidth/window.innerHeight,
+0.1,
+100
+);
+
+camera.position.set(0,2.5,8);
+
+const renderer=new THREE.WebGLRenderer({
+canvas:canvas,
+antialias:true
 });
 
-pet.addEventListener("pointermove",e=>{
- if(!dragging)return;
- pet.style.left=(e.clientX-dx)+"px";
- pet.style.top=(e.clientY-dy)+"px";
- pet.style.transform="none";
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+renderer.setPixelRatio(
+Math.min(window.devicePixelRatio,2)
+);
+
+renderer.shadowMap.enabled=true;
+
+scene.add(
+new THREE.HemisphereLight(0xffffff,0x8999c8,2)
+);
+
+const light=new THREE.DirectionalLight(
+0xffffff,3
+);
+
+light.position.set(4,7,6);
+scene.add(light);
+
+const floor=new THREE.Mesh(
+new THREE.CircleGeometry(10,64),
+new THREE.MeshStandardMaterial({
+color:0xe9edff
+})
+);
+
+floor.rotation.x=-Math.PI/2;
+floor.position.y=-1.5;
+scene.add(floor);
+
+const pet=new THREE.Group();
+scene.add(pet);
+
+function material(color){
+return new THREE.MeshStandardMaterial({
+color:color,
+roughness:0.75
+});
+}
+
+const skin=material('#ffe0d8');
+const hair=material('#f5f7ff');
+const dress=material('#dce8ff');
+const blue=material('#5275bd');
+const white=material('#ffffff');
+ function sphere(x,y,z,sx,sy,sz,mat){
+const mesh=new THREE.Mesh(
+new THREE.SphereGeometry(1,32,24),
+mat
+);
+mesh.position.set(x,y,z);
+mesh.scale.set(sx,sy,sz);
+pet.add(mesh);
+return mesh;
+}
+
+// 头部
+sphere(0,1.15,0,0.65,0.78,0.58,skin);
+
+// 白色头发
+sphere(0,1.65,-0.08,0.7,0.48,0.62,hair);
+
+// 两侧长发
+sphere(-0.62,0.85,-0.03,0.2,0.9,0.22,hair);
+sphere(0.62,0.85,-0.03,0.2,0.9,0.22,hair);
+
+// 刘海
+sphere(-0.3,1.65,0.48,0.32,0.27,0.17,hair);
+sphere(0.1,1.72,0.48,0.32,0.25,0.17,hair);
+sphere(0.4,1.62,0.45,0.25,0.25,0.17,hair);
+
+// 眼睛
+sphere(-0.25,1.25,0.51,0.09,0.14,0.07,blue);
+sphere(0.25,1.25,0.51,0.09,0.14,0.07,blue);
+
+// 眼睛高光
+sphere(-0.27,1.3,0.575,0.035,0.045,0.025,white);
+sphere(0.23,1.3,0.575,0.035,0.045,0.025,white);
+
+// 身体与裙子
+sphere(0,0.05,0,0.35,0.52,0.3,skin);
+
+const skirt=new THREE.Mesh(
+new THREE.ConeGeometry(0.65,1.05,32),
+dress
+);
+
+skirt.position.y=-0.55;
+pet.add(skirt);
+
+// 手臂
+sphere(-0.48,0.1,0,0.14,0.48,0.15,skin);
+sphere(0.48,0.1,0,0.14,0.48,0.15,skin);
+
+// 腿部
+sphere(-0.2,-1.1,0,0.13,0.35,0.14,skin);
+sphere(0.2,-1.1,0,0.13,0.35,0.14,skin);
+
+// 鞋子
+sphere(-0.2,-1.4,0.08,0.2,0.12,0.3,blue);
+sphere(0.2,-1.4,0.08,0.2,0.12,0.3,blue);
+ // 头顶装饰
+sphere(0,2.08,0,0.13,0.13,0.13,blue);
+
+// 角色动画状态
+let sleeping=false;
+let happy=false;
+let rotationY=0;
+let dragging=false;
+
+function smile(){
+happy=true;
+sleeping=false;
+document.getElementById('message').innerText=
+'主人！今天也要开心哦！♡';
+
+setTimeout(()=>{
+happy=false;
+},2500);
+}
+
+function sleepPet(){
+sleeping=true;
+document.getElementById('message').innerText=
+'Zzz... 我要睡觉啦～';
+}
+
+function wakePet(){
+sleeping=false;
+document.getElementById('message').innerText=
+'早上好！我醒啦！♡';
+}
+
+function resetView(){
+rotationY=0;
+pet.rotation.y=0;
+camera.position.set(0,2.5,8);
+document.getElementById('message').innerText=
+'视角已经恢复啦！';
+}
+
+// 触摸旋转
+let lastX=0;
+let lastY=0;
+
+canvas.addEventListener('pointerdown',e=>{
+dragging=true;
+lastX=e.clientX;
+lastY=e.clientY;
+canvas.setPointerCapture(e.pointerId);
 });
 
-pet.addEventListener("pointerup",()=>{
- dragging=false;
+canvas.addEventListener('pointermove',e=>{
+if(!dragging)return;
+
+const dx=e.clientX-lastX;
+const dy=e.clientY-lastY;
+
+rotationY+=dx*0.01;
+
+pet.rotation.y=rotationY;
+
+camera.position.y=Math.max(
+1.5,
+Math.min(3.5,camera.position.y-dy*0.005)
+);
+
+lastX=e.clientX;
+lastY=e.clientY;
 });
+
+canvas.addEventListener('pointerup',()=>{
+dragging=false;
+});
+ // 双指缩放和滚轮缩放
+canvas.addEventListener('wheel',e=>{
+camera.position.z=Math.max(
+5,
+Math.min(11,camera.position.z+e.deltaY*0.01)
+);
+});
+
+// 动画
+const clock=new THREE.Clock();
+
+function animate(){
+requestAnimationFrame(animate);
+
+const t=clock.getElapsedTime();
+
+if(!dragging){
+
+if(sleeping){
+pet.rotation.x=0.12;
+pet.position.y=-0.12;
+}else{
+pet.rotation.x=0;
+pet.position.y=Math.sin(t*2)*0.06;
+}
+}
+
+// 轻微呼吸
+if(!sleeping){
+pet.scale.y=1+Math.sin(t*2)*0.012;
+}
+
+// 人物面向
+renderer.render(scene,camera);
+}
+
+animate();
+
+// 手机屏幕适配
+window.addEventListener('resize',()=>{
+camera.aspect=window.innerWidth/window.innerHeight;
+camera.updateProjectionMatrix();
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+});
+
 </script>
-
 </body>
 </html>
